@@ -1,0 +1,120 @@
+{% extends 'base_copy.html' %}
+{% load static %}
+{% block content %}
+<!-- Main Start -->
+<main>
+    <!-- Services -->
+<form method="post" action="">
+    {% csrf_token %}
+    <section class="container my-4">
+        <h1 class="text-center mb-4 section-heading border-bottom pb-2">Checkout</h1>
+            <table class="table table-bordered">
+                <thead class="table-warning">
+                    <tr>
+                        <th>Plan</th>
+                        <th>Detalle del Plan</th>
+                        <th>Pago por:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <table class="table-bordered table">
+                                <tr>
+                                    <th>Subsciptor</th>
+                                    <td><select class="form-control mt-2" id="subscriptor" name="subscriptor" required>
+                                        <option selected>Seleccione un subscriptor</option>
+                                        {% for result in displayusername %}
+                                        <option value={{result.id}}>{{result.username}}</option>
+                                        {% endfor %}
+                                      </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <td>{{plan.title}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Precio</th>
+                                    <td>${{plan.price}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Cantidad Maxima de Cupos</th>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <th>Ya registrados</th>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <th>Cupos disponibles</th>
+                                    <td>15</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled">
+                                {% for feature in plan.subplanfeature_set.all %}
+                                <li>-{{feature.title}}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <table class="table table-bordered">
+                                {% for discount in plan.plandiscount_set.all %}
+                                <tr>
+                                    <td><input data-planprice="{{plan.price}}" 
+                                        data-discount="{{discount.total_discount}}" 
+                                        type="radio" id="validity{{discount.id}}" name="validity" 
+                                        class="select-validity" value=
+                                        "{{discount.total_months}}"/></td>
+                                    <th><label for="validity{{discount.id}}">{{discount.total_months}}
+                                        Month</label></th>
+                                    <td>{{discount.total_discount}}%</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot class="table-info">
+                    <tr>
+                        <td></td>
+                        <th>Monto Total</th>
+                        <td><b>$<span class="totalAmount">150</span></b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>
+                            
+                                
+                                <input type="submit" value="Proceed to Payment" class="btn 
+                                btn-primary" />
+    
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+    </section>
+</form>
+    <!-- End -->
+</main>
+<!-- End -->
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".select-validity").on('click',function(){
+        var _planPrice=$(this).attr('data-planprice');
+        var _planDisc=$(this).attr('data-discount');
+        var _planValid=$(this).val();
+        var _totalPrice=_planPrice*_planValid;
+        if(_planDisc>0){
+            var _discountedPrice=_totalPrice*_planDisc/100;
+            _discountedPrice=_totalPrice-_discountedPrice;
+        }else{
+            var _discountedPrice=_totalPrice;
+        }
+        $(".totalAmount").text(_discountedPrice);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load check_package %}
+{% load mathfilters %}
+{% block content %}
+{% load check_package %}
+  
+
+<div class="container mt-2">
+    
+  <div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+        <h2>Registrar asistencia </h2>
+      {% for message in messages %}
+      <div
+        class="alert alert-{{message.tags}} alert-dismissible fade show"
+        role="alert"
+      >
+        <strong></strong> {{message}}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% comment %} Contact Us COde {% endcomment %}
+      <form action="/attendance" method="post">{% csrf_token %}
+        {% csrf_token %}
+
+
+        <div class="form-group">
+            <input
+              type="text"
+              class="form-control mt-2"
+              value="{{user.username}}"
+              name="user"
+              placeholder="Enter Your Number"
+              readonly
+              required
+            />
+          </div>
+
+
+        <div class="form-group">
+
+          <select class="form-control mt-2" id="workout" name="workout" required>
+            <option selected>Seleccione un entranamiento</option>
+            <option value="Biceps">Biceps</option>
+            <option value="Triceps">Triceps</option>
+            <option value="Shoulders">Hombros</option>
+            <option value="Chest">Pecho</option>
+            <option value="ABS">ABS</option>
+            <option value="Back">Espalda</option>
+            <option value="Warm Up">Warm Up</option>
+            <option value="Treadmill">Treadmill</option>
+          </select>
+        </div>
+
+       
+          
+        <div class="form-group">
+            <label for="logintime" class="text-black">Hora de entrada</label>
+          <input
+            type="time"
+            class="form-control mt-2"
+            name="logintime"
+            id="logintime"
+            placeholder="Login Time"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+            <label for="loginout" class="text-black">Hora esperada de salida</label>
+          <input
+            type="time"
+            class="form-control mt-2"
+            name="loginout"
+            id="loginout"
+            placeholder="Login Out"
+            required
+          />
+        </div>                                        
+
+        <br />
+        <div class="d-grid gap-2">
+            
+            {% check_pckg_validity user.id plan.id as check_validity %}
+            {% if check_validity %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Success!</strong> Su membresia ha expirado, debe adquirir una nueva
+              </div>
+            {% else %}
+            <button class="btn btn-warning" type="submit">Registrar visita</button>
+            {% endif %}
+            
+          
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
+{% endblock %}

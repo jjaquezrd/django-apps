@@ -1,0 +1,171 @@
+ {% load static %}
+ <!doctype html>
+ <html lang="en">
+   <head>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- Bootstrap CSS -->
+     <link href= "{% static 'bootstrap.min.css' %}" rel="stylesheet" />
+     <!-- Bootstrap Icons -->
+     <link href= "{% static 'bootstrap-icons/font/bootstrap-icons.css' %}" rel="stylesheet" />
+     <!-- include jquery -->
+   <script type="text/javascript" src="{% static 'jquery-3.7.0.min.js' %}"></script>
+     
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+ 
+   <!-- Vendor CSS Files -->
+   <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+   <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+   <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+   <link href="static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+   <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+ 
+   <!-- Template Main CSS File -->
+   <link href="static/assets/css/style.css" rel="stylesheet">
+ 
+   <title>{{title}}</title>
+   </head>
+ <!-- Main Start -->
+ <main>
+    <!-- banner Start 
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for banner in banners %}
+        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+          <img src="{{banner.img.url}}" class="d-block w-100" alt="Slide 1">
+        </div>
+        {% endfor %}
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>-->
+
+    <!-- End Banner -->
+
+    <!-- ======= Header ======= -->
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center justify-content-lg-between">
+
+    <h1 class="logo me-auto me-lg-0"><a href="/">{{title}}<span>.</span></a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar order-last order-lg-0">
+      <ul>
+        <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+        <li><a class="nav-link scrollto" href="{% url 'gallery' %}">Galeria</a></li>
+        <li><a class="nav-link scrollto" href="{% url 'pricing' %}">Precios</a></li>
+        <li><a class="nav-link scrollto " href="{% url 'enquiry' %}">Solicitud</a></li>
+        <li class="dropdown"><a href="#"><span>Mi Cuenta</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+      {% if not request.user.is_authenticated %}
+        {% if request.session.trainerLogin %}
+
+        <li><a href="{% url 'trainer_dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'trainerlogout' %}">Logout</a></li>
+          {% else %}
+        <li><a href="{% url 'trainerlogin' %}">Login de Entrenador</a></li>
+        <li><a href="{% url 'signup' %}">Registrarse</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      {% else %}
+      <li><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+      <li><a href="{% url 'update_profile' %}">Perfil</a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+      {% endif %}
+          </ul>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+    {% if  request.user.is_authenticated %}
+    <a href="/" class="get-started-btn scrollto">Bienvenido</a>
+    {% endif %}
+  </div>
+</header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+        <div class="col-xl-10 col-lg-10">
+          <h1>Tu transformacion inicia aquí <span>.</span></h1>
+          <h2>Unete a {{title}} </h2>
+        </div>
+      </div>
+
+      <div class="row mt-50 gy-4 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+        {% for service in services %}  
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <img src="{{service.img.url}}" class="card-img-top" alt="...">
+            <h3><a href="">{{service.title}}</a></h3>
+            <p>{{service.detail}}</p>
+            <a href="service.php" class="btn btn-light">Ver mas</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section><!-- End Hero -->
+    <!-- Services 
+    <section class="container my-4">
+        <h1 class="text-center mb-4 section-heading">Services</h1>
+        <div class="row">
+          {% for service in services %}  
+          <div class="col-md-4">
+                <div class="card">
+                  <img src="{{service.img.url}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h3 class="card-title">{{service.title}}</h3>
+                    <p class="card-text">{{service.detail}}</p>
+                    <a href="service.php" class="btn btn-info">Ver mas</a>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+          </div>
+       
+    </section>-->
+    <!-- End -->
+
+    <!-- Testimonials -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                        <h1 class="mb-4 section-heading">Sobre Nosotros</h1>
+                        <p class="lh-base">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p><a href="{% url 'pagedetail' 1 %}" class="btn btn-info text-white">Read More</a></p>
+                </div>
+                <div class="col-md-6 offset-1">
+                        <h1 class="mb-4 section-heading">Galeria <a href="#" class="float-end btn btn-info text-white mt-2">Ver todas</a></h1>
+                        <div class="gallery">
+                           {% for gimg in gimgs %} 
+                          <a data-lightbox="gallery" href="{{gimg.img.url}}"><img src="{{gimg.img.url}}" width="155" class="img-thumbnail" alt="{{gimg.alt_text}}"></a>
+                          {% endfor %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Testimonials -->
+
+</main>
+<!-- End -->
+
+<!-- lightbox css-->
+<link rel="stylesheet" type="text/css" href="{% static 'lightbox2-2.11.4/dist/css/lightbox.min.css' %}" />
+<!-- lightbox js-->
+<script type="text/javascript" src="{% static 'lightbox2-2.11.4/dist/js/lightbox.min.js' %}"></script>

@@ -1,0 +1,101 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href= "{% static 'bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href= "{% static 'bootstrap-icons/font/bootstrap-icons.css' %}" rel="stylesheet" />
+    <!-- include jquery -->
+	<script type="text/javascript" src="{% static 'jquery-3.7.0.min.js' %}"></script>
+    <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+
+	<title>{{title}}</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg bg-light">
+	  <div class="container d-flex align-items-center justify-content-lg-between">
+		<h1 class="logo me-auto me-lg-0"><a href="/">{{title}}<span>.</span></a></h1>
+		<!-- Uncomment below if you prefer to use an image logo -->
+      	<!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+	    <a class="navbar order-last order-lg-0" href="{% url 'home' %}"></a>
+	    <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">-->
+	      <ul class="navbar-nav ms-auto">
+	        <li class="nav-item">
+	          <a class="nav-link scrollto active" aria-current="page" href="{% url 'home' %}">Home</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link scrollto" aria-current="page" href="{% url 'gallery' %}">Gallery</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link scrollto" href="{% url 'pricing' %}">Pricing</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link scrollto btn btn-sm btn-dark text-white" href="{% url 'enquiry' %}">Enquiry</a>
+	        </li>
+	        <li class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+	          <!--<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            My Account
+	          </a>-->
+	          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+				{% if not request.user.is_authenticated %}
+					{% if request.session.trainerLogin %}
+					<li><a class="dropdown-item" href="{% url 'trainer_dashboard' %}">Dashboard</a></li>
+					<li><a class="dropdown-item" href="{% url 'trainerlogout' %}">Logout</a></li>
+					{% else %}
+					<li><a class="dropdown-item" href="{% url 'trainerlogin' %}">Trainer Login</a></li>
+					<li><a class="dropdown-item" href="{% url 'signup' %}">Register</a></li>
+	            	<li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+					{% endif %}
+				{% else %}
+				<li><a class="dropdown-item" href="{% url 'user_dashboard' %}">Dashboard</a></li>
+	            <li><a class="dropdown-item" href="{% url 'update_profile' %}">Profile</a></li>
+	            <li><a class="dropdown-item" href="#">Settings</a></li>
+	            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+				{% endif %}
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+    <!-- Header End -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Footer Start-->
+    <footer class="container py-5">
+	    <p class="float-end"><a href="#">Back to top</a></p>
+	    <p>© 2017–2021 Arnold GYM, Inc. · 
+            <a href="{% url 'pagedetail' 2 %}">Privacy</a> · 
+            <a href="{% url 'pagedetail' 3 %}">Terms</a> . 
+            <a href="{% url 'faq' %}">FAQ</a>
+			<a href="#">Contact Us</a>
+        </p>
+	  </footer>
+    <!-- Bootstrap Bundle -->
+    <script src= "{% static 'bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
