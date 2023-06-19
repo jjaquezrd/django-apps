@@ -1,1 +1,1 @@
-web: gunicorn gymManageSys/gymManageSys.wsgi --log-file -
+web:gunicorn gymManageSys/gymManageSys.wsgi --log-file -
