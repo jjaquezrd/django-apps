@@ -80,8 +80,8 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'gymManageSys.wsgi.application'
-ASGI_APPLICATION = 'gymManageSys.asgi.application'
+WSGI_APPLICATION = 'gymManageSys.wsgi.application'
+#ASGI_APPLICATION = 'gymManageSys.asgi.application'
 
 
 # Database
