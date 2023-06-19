@@ -10,7 +10,5 @@ Pillow==9.5.0
 psycopg2==2.9.6
 redis==4.5.5
 stripe==5.4.0
-Twisted==22.10.0
-twisted-iocpsupport==1.0.3
 whitenoise==6.5.0
 zope.interface==6.0
