@@ -1,1 +1,1 @@
-web: gunicorn gymManageSys.WSGI:application
+web: gunicorn --pythonpath gymManageSys gymManageSys.wsgi
